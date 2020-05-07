@@ -7,21 +7,45 @@ module.exports = {
 
 function succeed(item) {
   // Accepts an item object and returns a new item object
+  const minEnhancement = 0;
   const maxEnhancement = 20;
-  item.enhancement += (item.enhancement < maxEnhancement ? 1 : 0);
+  item.enhancement += item.enhancement < maxEnhancement ? 1 : 0;
+  item.enhancement = Math.max(
+    Math.min(item.enhancement, maxEnhancement),
+    minEnhancement
+  );
   return { ...item };
 }
 
 function fail(item) {
   // Accepts an item object and returns a new item object
+  console.log("fail:", item)
+  // Define valid ranges for the object
+  const minEnhancement = 0;
+  const maxEnhancement = 20;
+  const minDurability = 0;
+  const maxDurability = 100;
+
+  // Determine the durability decrease factor
   let durabilityDecrease;
   if (item.enhancement < 15) {
-    durabilitytDecrease = 5;
+    durabilityDecrease = 5;
   } else {
     durabilityDecrease = 10;
   }
+
+  // Modify the durability and enhancement
   item.durability -= durabilityDecrease;
-  item.enhancement -= (item.enhancement > 16 ? 1 : 0);
+  item.durability = Math.min(
+    Math.max(item.durability, minDurability),
+    maxDurability
+  );
+
+  item.enhancement -= item.enhancement > 16 ? 1 : 0;
+  item.enhancement = Math.min(
+    Math.max(item.enhancement, minEnhancement),
+    maxEnhancement
+  );
   return { ...item };
 }
 
