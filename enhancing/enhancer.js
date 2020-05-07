@@ -19,7 +19,6 @@ function succeed(item) {
 
 function fail(item) {
   // Accepts an item object and returns a new item object
-  console.log("fail:", item)
   // Define valid ranges for the object
   const minEnhancement = 0;
   const maxEnhancement = 20;
@@ -41,11 +40,12 @@ function fail(item) {
     maxDurability
   );
 
-  item.enhancement -= item.enhancement > 16 ? 1 : 0;
+  item.enhancement -= (item.enhancement > 16 ? 1 : 0);
   item.enhancement = Math.min(
     Math.max(item.enhancement, minEnhancement),
     maxEnhancement
   );
+
   return { ...item };
 }
 

@@ -14,7 +14,6 @@ const verifyRanges = (obj) => {
   const enhanceRange = range(20); // 0 to 20, inclusive
   const durabilityInRange = durabilityRange.includes(obj.durability);
   const enhancementInRange = enhanceRange.includes(obj.enhancement);
-  console.log("obj:", obj)
   return durabilityInRange && enhancementInRange;
 };
 
@@ -179,14 +178,41 @@ describe("the item method library under test", () => {
   });
 
   it("decreases the durability by 5 if the item's enhancement is less than 15", () => {
-
+    const enhance1 = enhancer.fail(item1);
+    const enhance2 = enhancer.fail(item2);
+    const enhance3 = enhancer.fail(item3);
+    const enhance4 = enhancer.fail(item4);
+    const enhance5 = enhancer.fail(item5);
+    expect(enhance1.durability).toBe(0);
+    expect(enhance2.durability).toBe(94);
+    expect(enhance3.durability).not.toBe(94);
+    expect(enhance4.durability).not.toBe(94);
+    expect(enhance5.durability).not.toBe(95);
   });
 
   it("decreases the durability by 10 if the item's enhancement is 15 or more", () => {
-    
+    const enhance1 = enhancer.fail(item1);
+    const enhance2 = enhancer.fail(item2);
+    const enhance3 = enhancer.fail(item3);
+    const enhance4 = enhancer.fail(item4);
+    const enhance5 = enhancer.fail(item5);
+    expect(enhance1.durability).toBe(0);
+    expect(enhance2.durability).not.toBe(89);
+    expect(enhance3.durability).toBe(89);
+    expect(enhance4.durability).toBe(89);
+    expect(enhance5.durability).toBe(90);
   });
 
   it("decreases the enhancement by 1 if the item's enhancement is greater than 16", () => {
-    
+    const enhance1 = enhancer.fail(item1);
+    const enhance2 = enhancer.fail(item2);
+    const enhance3 = enhancer.fail(item3);
+    const enhance4 = enhancer.fail(item4);
+    const enhance5 = enhancer.fail(item5);
+    expect(enhance1.enhancement).toBe(0); 
+    expect(enhance2.enhancement).toBe(14);
+    expect(enhance3.enhancement).toBe(15); 
+    expect(enhance4.enhancement).toBe(16);
+    expect(enhance5.enhancement).toBe(19);
   });
 });
