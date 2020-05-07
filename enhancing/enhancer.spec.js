@@ -1,6 +1,11 @@
 const enhancer = require("./enhancer.js");
 // test away!
 
+const range = end => {
+  const arr = Array.from({length: end}, (_, idx) => idx + 1);
+  arr.unshift(0);
+  return arr;
+};
 const verifyProperties = obj => {
   const keys = Object.keys(obj);
   const hasName = keys.includes("name");
