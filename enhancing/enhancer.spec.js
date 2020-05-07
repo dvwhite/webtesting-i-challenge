@@ -23,10 +23,49 @@ describe("item methods testing", () => {
     items = [item1, item2, item3, item4, item5];
   });
 
+  // get
   it("returns an object with the same properties when get(item) is called", () => {
     const newItem = enhancer.get(item1);
     expect(newItem).toEqual(item1); // Test equivalency
     expect(verifyProperties(newItem)).toBe(true); // Test it still has properties expected
+  });
+
+  // repair
+  it("returns an object with durability=100 when repair(item) is called", () => {
+    // Normal case, expected usage, correct shape, no typos, no bugs in quantities
+    const repairedItem = enhancer.repair(item1);
+    expect(repairedItem.durability).toBe(100);
+    
+    // Unlikely cases - but nevertheless good to test for
+    
+    //  Ensure it handles negative durability quantities
+    const buggyItem = { name: "Test 1t3m l", durability: -100, enhancement: 20 };
+    const repairedBuggyItem = enhancer.repair(buggyItem);
+    expect(repairedBuggyItem.durability).toBe(100);
+
+    // Ensure it handles not needing to be repaired
+    const perfectItem = { name: "Doesn't need repairs", durability: 100, enhancement: 20 };
+    const repairedFineItem = enhancer.repair(perfectItem);
+    expect(repairedFineItem.durability).toBe(100);
+
+    // Ensure it handles lack of a durability property
+    const wrongShape = { name: "Lacks the durability property", durrabillity: 100, enhancement: 1 }
+    const repairedTypoItem = enhancer.repair(wrongShape);
+    expect(repairedTypoItem.durability).toBe(100);
+
+    // Ensure it still has the desired properties on the normal case and typo'd case
+    expect(verifyProperties(repairedItem)).toBe(true);
+    expect(verifyProperties(repairedTypoItem)).toBe(true); 
+  });
+
+  // succeed
+  it("", () => {
+
+  });
+
+  // fail
+  it("", () => {
+
   });
 });
 
