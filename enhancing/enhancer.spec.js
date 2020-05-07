@@ -32,22 +32,33 @@ describe("the item method library under test", () => {
 
   // (Re)build them before each test
   beforeEach(() => {
-    item1 = { name: "Test Item 1", durability: 0, enhancement: 0 };
-    item2 = { name: "Test Item 2", durability: 99, enhancement: 14 };
-    item3 = { name: "Test Item 3", durability: 99, enhancement: 15 };
-    item4 = { name: "Test Item 4", durability: 99, enhancement: 17 };
-    item5 = { name: "Test Item 5", durability: 100, enhancement: 20 };
+    item1 = { name: "Kukri of Destiny", durability: 0, enhancement: 0 };
+    item2 = { name: "Morningstar", durability: 99, enhancement: 14 };
+    item3 = { name: "Ninja Sword", durability: 99, enhancement: 15 };
+    item4 = { name: "Silver Rapier", durability: 99, enhancement: 17 };
+    item5 = { name: "Wickedly Curved Iron Greataxe", durability: 100, enhancement: 20 };
     items = [item1, item2, item3, item4, item5];
   });
 
   // get
-  it("returns an object with the same properties when get(item) is called", () => {
+  it("returns an object with the required properties when get(item) is called", () => {
+    // No expected changes to name in this first case
     const newItem = enhancer.get(item1);
     expect(newItem).toEqual(item1); // Test equivalency
+    expect(newItem.name).toBe("Kukri of Destiny");
     expect(verifyProperties(newItem)).toBe(true); // Test it still has properties expected
     expect(verifyRanges(newItem)).toBe(true);
     delete newItem.durability;
     expect(newItem).not.toEqual(item1);
+    // Expects a changed name in the remaining cases
+    const newItem2 = enhancer.get(item2);
+    const newItem3 = enhancer.get(item3);
+    const newItem4 = enhancer.get(item4);
+    const newItem5 = enhancer.get(item5);
+    expect(newItem2.name).toBe("[+14] Morningstar");
+    expect(newItem3.name).toBe("[+15] Ninja Sword");
+    expect(newItem4.name).toBe("[+17] Silver Rapier");
+    expect(newItem5.name).toBe("[+20] Wickedly Curved Iron Greataxe");
   });
 
   // repair
